@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const Form = ({ todoData, setTodoData }) => {
+  console.log("Form 랜더링");
   // 새로운 할 일 state 변수
   const [value, setValue] = useState("");
   // input type="text" 의 value 변경 화면 리랜더링
