@@ -41,7 +41,7 @@ const ListItem = ({ item, todoData, setTodoData }) => {
   };
   return (
     <div>
-      <div style={getStyle(item.completed)} key={item.id}>
+      <div style={getStyle(item.completed)}>
         {/* defaultChecked : 체크박스에 기본체크 상태 설정 */}
         <input
           type="checkbox"
