@@ -3,16 +3,16 @@ import "./App.css";
 import List from "./components/List";
 import Form from "./components/Form";
 function App() {
-  console.log("App 랜더링");
-  // 더미 데이터 state 변수
-  const [todoData, setTodoData] = useState([
-    { id: 1, title: "할일 1", completed: true },
-    { id: 2, title: "할일 2", completed: false },
-    { id: 3, title: "할일 3", completed: true },
-    { id: 4, title: "할일 4", completed: true },
-  ]);
+  // console.log("App 랜더링");
+  // 로컬 데이터 state 변수
+  const initTodoData = localStorage.getItem("fbTodoData")
+    ? JSON.parse(localStorage.getItem("fbTodoData"))
+    : [];
+  const [todoData, setTodoData] = useState(initTodoData);
   const handleRemoveClick = () => {
     setTodoData([]);
+    // 로컬스토리지 초기화
+    localStorage.setItem("fbTodoData", JSON.stringify([]));
   };
 
   // 이벤트 핸들러
