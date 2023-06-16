@@ -27,6 +27,32 @@ const SignUpDiv = styled.div`
   }
 `;
 
+export const MyPageDiv = styled.div`
+  form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 80%;
+    margin: 0 auto;
+    gap: 10px 0;
+    div {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+      label {
+        display: block;
+        width: 25%;
+        font-weight: 700;
+      }
+      input {
+        display: block;
+        width: 60%;
+        border: 1px solid #ddd;
+      }
+    }
+  }
+`;
+
 export const LoginDiv = styled.div`
   form {
     display: flex;
