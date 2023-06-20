@@ -9,6 +9,7 @@ import SignUp from "./pages/SignUp";
 import Todo from "./pages/Todo";
 import NotFound from "./pages/NotFound";
 import MyPage from "./pages/MyPage";
+import Schedule from "./pages/Schedule";
 
 function App() {
   // console.log("App 랜더링");
@@ -63,6 +64,7 @@ function App() {
               />
             }
           />
+          <Route path="/schedule" element={<Schedule />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

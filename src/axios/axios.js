@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
   },
 });
 // Todo Get 기능
-const getTodo = async setTodoData => {
+const getTodo = async (setTodoData, setIsLoading) => {
   try {
     const res = await axiosInstance.get("/todos");
     const result = res.data;
@@ -27,6 +27,7 @@ const getTodo = async setTodoData => {
     setTodoData(todosArr);
   } catch (error) {
     console.log(error);
+    setIsLoading(false);
   }
 };
 // Todo Post 기능
