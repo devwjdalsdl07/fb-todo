@@ -1,56 +1,57 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import firebase from "../firebase.js";
+import firebase from "../firebase";
 import { Button, Checkbox, Form, Input, Modal } from "antd";
 
 const Login = ({ setFBName, setFBEmail, setFBUid }) => {
-  // Link, NavLink, useNavigate = 페이지 이동
+  // Link, NavLink, useNaviage
   const navigate = useNavigate();
-  // 로그인 기능
+  // 로그인
   const tailLayout = {
-    wrapperCol: {
-      offset: 8,
-      span: 16,
-    },
+    wrapperCol: { offset: 8, span: 16 },
   };
+
   const onFinish = async values => {
-    // console.log("Success:", values);
+    console.log("Success:", values);
+    // Firebase 로그인
     try {
       await firebase
         .auth()
         .signInWithEmailAndPassword(values.email, values.password);
+      // 로그인 된 사용자 정보를 가지고 옮
       const user = firebase.auth().currentUser;
-      console.log(user);
       setFBName(user.displayName);
       setFBEmail(user.email);
       setFBUid(user.uid);
       navigate("/");
     } catch (error) {
       console.log(error.code);
+
       if (error.code === "auth/invalid-email") {
-        setIsModalOpen(true);
         setModalMessage("올바른 이메일 형식이 아닙니다.");
       } else if (error.code === "auth/wrong-password") {
-        setIsModalOpen(true);
-        setModalMessage("올바르지 않은 비밀번호 입니다.");
+        setModalMessage("올바르지 않은 비밀번호입니다.");
       } else if (error.code === "auth/user-not-found") {
-        setIsModalOpen(true);
         setModalMessage("가입되지 않은 사용자 입니다.");
       } else if (error.code === "auth/missing-email") {
-        setIsModalOpen(true);
         setModalMessage("이메일이 입력되지 않았습니다.");
       } else {
-        setModalMessage("로그인에 실패했습니다.");
+        setModalMessage("로그인이 실패하였습니다.");
       }
       showModal();
     }
   };
   const onFinishFailed = errorInfo => {
-    console.log("Failed:", errorInfo);
+    // console.log("Failed:", errorInfo);
+    const arr = errorInfo.errorFields;
+    console.log(arr);
+    arr.forEach(item => {
+      console.log(item.errors);
+    });
   };
   // Modal 기능
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMassage, setModalMessage] = useState("");
+  const [modalMessage, setModalMessage] = useState("");
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -63,20 +64,19 @@ const Login = ({ setFBName, setFBEmail, setFBUid }) => {
   };
 
   return (
-    <div className="p-6 m-auto mt-5 shadow rounded-md bg-white">
+    <div className="p-6 mt-5 shadow rounded-md bg-white">
       <h2>Login</h2>
 
       {/* AntD Modal */}
       <Modal
-        title="Login Error"
+        title="Basic Modal"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <p>{modalMassage}</p>
+        <p>{modalMessage}</p>
       </Modal>
-
-      {/* AntD Form */}
+      {/*  AntD form */}
       <Form
         name="basic"
         labelCol={{
@@ -95,6 +95,7 @@ const Login = ({ setFBName, setFBEmail, setFBUid }) => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
+        validateTrigger="onSubmit"
       >
         <Form.Item
           label="Email"
@@ -103,9 +104,10 @@ const Login = ({ setFBName, setFBEmail, setFBUid }) => {
             {
               type: "email",
               required: true,
-              message: "Please input your Email!",
+              message: "",
             },
           ]}
+          validateTrigger="onSubmit"
         >
           <Input />
         </Form.Item>
@@ -116,7 +118,7 @@ const Login = ({ setFBName, setFBEmail, setFBUid }) => {
           rules={[
             {
               required: true,
-              message: "Please input your password!",
+              message: "비밀번호를 입력해주세요!",
               validator: async (_, password) => {
                 if (!password || password.length < 6) {
                   return Promise.reject(new Error("At least 6 passengers"));
@@ -139,20 +141,15 @@ const Login = ({ setFBName, setFBEmail, setFBUid }) => {
           <Checkbox>Remember me</Checkbox>
         </Form.Item>
 
-        <Form.Item
-        {...tailLayout}
-          // wrapperCol={{
-          //   offset: 8,
-          //   span: 16,
-          // }}
-        >
+        <Form.Item {...tailLayout}>
           <Button
             type="primary"
             htmlType="submit"
-            style={{ backgroundColor: "#1677ff", marginRight:"8px"}}
+            style={{ backgroundColor: "#1677ff", marginRight: "8px" }}
           >
-            Login
+            로그인
           </Button>
+
           <Button
             htmlType="button"
             style={{}}
@@ -162,12 +159,8 @@ const Login = ({ setFBName, setFBEmail, setFBUid }) => {
           </Button>
         </Form.Item>
       </Form>
-
-      {/* 
-  1. emotion 을 활용하여 tag 의 용도를 구분한다. 
-  2. css 도 함께 적용한다
-  */}
     </div>
   );
 };
+
 export default Login;

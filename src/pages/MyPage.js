@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { MyPageDiv } from "../style/UserCss";
+import { MyPageDiv } from "../style/UserCSS";
 import { useNavigate } from "react-router-dom";
 import firebase from "../firebase";
 
@@ -19,10 +19,10 @@ const MyPage = ({
 
   useEffect(() => {
     if (!fbUid) {
-      navigate("/");
+      navigator("/");
     }
   }, []);
-  // FB 의 사용자정보 객체
+  //  FB 의 사용자정보 객체
   const user = firebase.auth().currentUser;
 
   const handlerNickName = async e => {
@@ -33,19 +33,18 @@ const MyPage = ({
       });
       setFBName(nickName);
       setNickName(nickName);
-      alert("닉네임 정보를 수정하였습니다.");
+      alert("닉네임 정보를 변경하였습니다.");
     } catch (error) {
       console.log(error.code);
     }
-
-    setNickName(nickName);
   };
   const handlerEmail = async e => {
     e.preventDefault();
     try {
       await user.updateEmail(email);
       setFBEmail(email);
-      alert("이메일 정보를 수정하였습니다.");
+      setEmail(email);
+      alert("이메일 정보를 변경하였습니다.");
     } catch (error) {
       if (error.code == "auth/email-already-in-use") {
         alert("The email address is already in use");
@@ -56,7 +55,7 @@ const MyPage = ({
       }
     }
   };
-  const handlerPassWord = async e => {
+  const handlerPassword = async e => {
     e.preventDefault();
     try {
       await user.updatePassword(pw);
@@ -65,8 +64,7 @@ const MyPage = ({
       if (error.code == "auth/weak-password") {
         alert("The password is too weak.");
       } else {
-        alert("비밀번호 다시 입력해 주세요");
-        console.log(error.code);
+        alert("비밀번호 다시 입력해 주세요.");
       }
     }
   };
@@ -74,14 +72,13 @@ const MyPage = ({
     e.preventDefault();
     try {
       await user.delete();
-      console.log("회원탈퇴");
       alert("서비스 탈퇴하였습니다.");
       setFBEmail("");
       setFBName("");
       setFBUid("");
       navigate("/");
     } catch (error) {
-      console.log(error.code);
+      console.log(error);
     }
   };
 
@@ -148,7 +145,7 @@ const MyPage = ({
             />
             <button
               className="border rounded px-3 py-2 shadow"
-              onClick={handlerPassWord}
+              onClick={handlerPassword}
             >
               비밀번호 변경
             </button>
@@ -158,7 +155,7 @@ const MyPage = ({
               className="border rounded px-3 py-2 shadow"
               onClick={handlerDelete}
             >
-              회원 탈퇴
+              회원탈퇴
             </button>
             <button
               className="border rounded px-3 py-2 shadow"

@@ -1,6 +1,6 @@
 # 파이어베이스 연동 Todo 웹 개발
 
-Firbase 인증 및 Fire Store를 활용한 React 웹 서비스
+Firebase 인증 및 Fire Store를 활용한 React 웹 서비스
 
 ## 1. 프로젝트 정보
 
@@ -16,7 +16,7 @@ Firbase 인증 및 Fire Store를 활용한 React 웹 서비스
 - Emotion
 - SCSS
 - Fontawsome
-- TailWind
+- Tailwind
 - axios
 - AntDesign
 - React Calendar

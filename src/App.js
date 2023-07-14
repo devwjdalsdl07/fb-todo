@@ -1,6 +1,5 @@
 import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useState } from "react";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -9,8 +8,7 @@ import SignUp from "./pages/SignUp";
 import Todo from "./pages/Todo";
 import NotFound from "./pages/NotFound";
 import MyPage from "./pages/MyPage";
-import Schedule from "./pages/Schedule";
-import Upload from "./pages/Upload";
+import { useState } from "react";
 
 function App() {
   // console.log("App 랜더링");
@@ -18,8 +16,6 @@ function App() {
   const [fbName, setFBName] = useState("");
   const [fbEmail, setFBEmail] = useState("");
   const [fbUid, setFBUid] = useState("");
-
-  // 이벤트 핸들러
 
   return (
     <div className="w-screen h-screen bg-blue-300 overflow-x-hidden">
@@ -34,7 +30,7 @@ function App() {
       <div className="container mx-auto h-full">
         <Routes>
           {/* Navigate 를 이용한 강제 이동 */}
-          <Route path="/" element={<Navigate to="home" />} />
+          <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route
@@ -65,8 +61,6 @@ function App() {
               />
             }
           />
-          <Route path="/schedule" element={<Schedule />} />
-          <Route path="/upload" element={<Upload />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

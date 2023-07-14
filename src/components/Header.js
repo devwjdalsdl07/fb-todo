@@ -10,29 +10,25 @@ const Header = ({
   setFBEmail,
   setFBUid,
 }) => {
-  const navigate = useNavigate();
+  const navigator = useNavigate();
   // fb 로그아웃
   const handleLogout = () => {
     firebase.auth().signOut();
     console.log("로그아웃");
-
     setFBName("");
     setFBEmail("");
     setFBUid("");
-    navigate("/");
+    navigator("/");
   };
   return (
-    <header className="p-6 bg-black">
+    <header className="p-7 bg-black">
       <div className="flex items-center justify-between">
         <Link to="/" className="text-white hover:text-orange-600">
           로고
         </Link>
-        <ul className="flex justify-center gap-4">
+        <ul className="flex items-center justify-center gap-4">
           <li>
-            <Link
-              to="/Home"
-              className="text-white flex justify-center gap-4 hover:text-orange-600"
-            >
+            <Link to="/home" className="text-white hover:text-orange-600">
               Home
             </Link>
           </li>
@@ -49,16 +45,6 @@ const Header = ({
               Todo
             </Link>
           </li>
-          <li>
-            <Link to="/schedule" className="text-white hover:text-orange-600">
-              Schedule
-            </Link>
-          </li>
-          <li>
-            <Link to="/upload" className="text-white hover:text-orange-600">
-              Upload
-            </Link>
-          </li>
         </ul>
         <div className="flex justify-center gap-5">
           {fbUid ? (
@@ -73,7 +59,7 @@ const Header = ({
                 Login
               </Link>
               <Link to="/signup" className="text-white hover:text-orange-600">
-                SignUp
+                Signup
               </Link>
             </>
           )}

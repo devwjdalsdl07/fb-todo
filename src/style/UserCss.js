@@ -7,6 +7,7 @@ const SignUpDiv = styled.div`
     width: 80%;
     margin: 0 auto;
     gap: 10px 0;
+
     label {
       display: block;
       width: 30%;
@@ -35,6 +36,7 @@ export const MyPageDiv = styled.div`
     width: 80%;
     margin: 0 auto;
     gap: 10px 0;
+
     div {
       display: flex;
       justify-content: flex-start;
@@ -60,6 +62,7 @@ export const LoginDiv = styled.div`
     width: 80%;
     margin: 0 auto;
     gap: 10px 0;
+
     label {
       display: block;
       width: 30%;
@@ -72,5 +75,4 @@ export const LoginDiv = styled.div`
     }
   }
 `;
-
 export default SignUpDiv;

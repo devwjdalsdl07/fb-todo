@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { patchTitleTodo, patchCompletedTodo, deleteTodo } from "../axios/axios";
+import React, { useEffect, useState } from "react";
 
 const ListItem = ({ item, todoData, setTodoData }) => {
   // console.log("ListItem 랜더링", item);
@@ -8,6 +7,10 @@ const ListItem = ({ item, todoData, setTodoData }) => {
   const [isEdit, setIsEdit] = useState(false);
   // 편집 상태 타이틀 설정 state
   const [editTitle, setEditTitle] = useState(item.title);
+
+  useEffect(() => {
+    // setEditTitle(item.title);
+  }, []);
 
   const getStyle = _completed => {
     return {
@@ -24,17 +27,16 @@ const ListItem = ({ item, todoData, setTodoData }) => {
     const newTodoData = todoData.filter(item => item.id !== _id);
     setTodoData(newTodoData);
     // 로컬스토리지 저장
-    // localStorage.setItem("fbTodoData", JSON.stringify(newTodoData));
-    //  axios delete 호출 fbtodolist 삭제하기
-    deleteTodo(_id);
+    localStorage.setItem("fbTodoData", JSON.stringify(newTodoData));
+    // axios delete 호출 fbtodolist 삭제하기
   };
-
   const handleEditClick = () => {
     setIsEdit(true);
   };
   const handleEditChange = e => {
     setEditTitle(e.target.value);
   };
+
   const handleCancelClick = () => {
     setIsEdit(false);
   };
@@ -42,16 +44,14 @@ const ListItem = ({ item, todoData, setTodoData }) => {
     let newTodoData = todoData.map(item => {
       if (item.id === _id) {
         item.title = editTitle;
-        item.completed = false;
       }
       return item;
     });
+
     setTodoData(newTodoData);
     // 로컬스토리지 저장
-    // localStorage.setItem("fbTodoData", JSON.stringify(newTodoData));
+    localStorage.setItem("fbTodoData", JSON.stringify(newTodoData));
     // axios patch/put 호출 fbtodolist 수정하기
-    // axiosInstance.patch(`/todos/${_id}`, { title: editTitle });
-    patchTitleTodo(_id, editTitle);
     setIsEdit(false);
   };
 
@@ -68,9 +68,8 @@ const ListItem = ({ item, todoData, setTodoData }) => {
     });
     setTodoData(newTodoData);
     // 로컬스토리지 저장
-    // localStorage.setItem("fbTodoData", JSON.stringify(newTodoData));
+    localStorage.setItem("fbTodoData", JSON.stringify(newTodoData));
     // axios patch/put 호출 fbtodolist 수정하기
-    patchCompletedTodo(_id, { ...item });
   };
 
   if (isEdit) {
@@ -89,9 +88,8 @@ const ListItem = ({ item, todoData, setTodoData }) => {
         </div>
         <div className="items-center">
           <button className="px-4 py-2 float-right" onClick={handleCancelClick}>
-            Cancel
+            Cancle
           </button>
-
           <button
             className="px-4 py-2 float-right"
             onClick={() => handleSaveClick(item.id)}
@@ -110,7 +108,6 @@ const ListItem = ({ item, todoData, setTodoData }) => {
           <input
             type="checkbox"
             defaultChecked={item.completed}
-            value={item.completed}
             onChange={() => handleCompleteChange(item.id)}
           />
           <span className="ml-3">{item.title}</span>
