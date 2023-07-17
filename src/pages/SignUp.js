@@ -55,7 +55,7 @@ const SignUp = () => {
 
   return (
     <div className="p-6 mt-5 shadow rounded-md bg-white">
-      <h2>Singup</h2>
+      <h2>SignUP</h2>
       {/* 
         1. emotion 을 활용하여 tag 의 용도를 구분한다. 
         2. css 도 함께 적용한다.
