@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 // import firebase from "../firebase";
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
-const Header = ({ fbName, fbEmail, fbUid }) => {
+const Header = () => {
   // AuthContext 로그아웃 실행으로 상태 변경
   const { logout } = useLogout();
   const { user } = useAuthContext();
+  console.log("============");
+  console.log(user);
 
   // const navigator = useNavigate();
   // fb 로그아웃
@@ -39,24 +41,32 @@ const Header = ({ fbName, fbEmail, fbUid }) => {
           </li>
           <li>
             <Link
-              to={fbUid ? "/todo" : "/login"}
+              to={user ? "/todo" : "/login"}
               className="text-white hover:text-orange-600"
             >
               Todo
             </Link>
           </li>
+          <li>
+            <Link to="/schedule" className="text-white hover:text-green-400">
+              Schedule
+            </Link>
+          </li>
+          <li>
+            <Link to="/upload" className="text-white hover:text-green-400">
+              Upload
+            </Link>
+          </li>
+          <li>
+            <Link to="/chart" className="text-white hover:text-green-400">
+              Chart
+            </Link>
+          </li>
         </ul>
         <div className="flex justify-center gap-5">
-          <button
-            onClick={handleLogout}
-            className="text-white hover:text-orange-600"
-          >
-            로그아웃
-          </button>
-
           {user ? (
             <div className="text-white">
-              {fbName} {fbEmail} {fbUid}
+              {user.displayName} {user.email} {user.uid}
               <button onClick={handleLogout}>로그아웃</button>
               <Link to="/mypage">마이페이지</Link>
             </div>

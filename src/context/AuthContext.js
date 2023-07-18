@@ -1,4 +1,6 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
+import { appAuth } from "../firebase/config";
+import { onAuthStateChanged } from "firebase/auth";
 
 // FB 인증 Context 생성
 // Context 생성 목적은 전역 상태정보 활용
@@ -6,15 +8,23 @@ import { createContext, useReducer } from "react";
 //  상태정보 출력 및 수정 이  목적
 const AuthContext = createContext();
 // context 관리 Reducer함수
+// action (요청서) 을 처리하는 reducer 함수
+// reducer 함수 형태로 action(요청서) 를 처리하는 이유는
+// 원본(State)를 훼손하지 않고 원하는 데이터 처리 후
+// 원본(state)를 변경한다. (불변성 유지)
 const authReducer = (state, action) => {
   // console.log(action.type, action.payload);
   console.log("리듀서함수 : ", action);
+  // action 은 반드시 형태가 {type: "구분자"}
   switch (action.type) {
     case "login":
       // state 를 갱신한다.
       return { ...state, user: action.payload };
     case "logout":
       return { ...state, user: null };
+
+    case "isAuthReady":
+      return { ...state, user: action.payload, isAuthReady: true };
 
     default:
       // 그대로 돌려준다.
@@ -31,7 +41,15 @@ const AuthContextProvider = ({ children }) => {
   // const [전역상태, 전역상태관리함수] = useReducer(함수, 초기값);
   const [state, dispatch] = useReducer(authReducer, {
     user: null, // fb 로그인 정보 {email:"", uid:"",nickName:""}
+    isAuthReady: false, // 로그인 상태 체크
   });
+  // FB 인증 웹브라우저 새로 고침 처리
+  useEffect(() => {
+    onAuthStateChanged(appAuth, user => {
+      console.log("onAuthStateChanged : ", user);
+      dispatch({ type: "isAuthReady", payload: user });
+    });
+  }, []);
 
   return (
     // Context 내부의 컴포넌트들에게 State (상태정보) 를 공급하겠다
