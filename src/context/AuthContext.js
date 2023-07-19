@@ -26,6 +26,15 @@ const authReducer = (state, action) => {
     case "isAuthReady":
       return { ...state, user: action.payload, isAuthReady: true };
 
+    case "updateName":
+      return { ...state, user: action.payload };
+
+    case "updateEmail":
+      return { ...state, user: action.payload };
+
+    case "userDelete":
+      return { ...state, user: null };
+
     default:
       // 그대로 돌려준다.
       return state;
