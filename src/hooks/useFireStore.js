@@ -31,13 +31,8 @@ const storeReducer = (state, action) => {
         succes: true,
       };
     case "deleteDoc":
-      return {
-        isPending: false,
-        document: action.payload,
-        error: null,
-        succes: true,
-      };
     case "updateCompleted":
+    case "updateDoc":
       return {
         isPending: false,
         document: action.payload,
@@ -86,12 +81,31 @@ export const useFireStore = transaction => {
   const updateCompletedDocument = async (id, flag) => {
     dispatch({ type: "isPending" });
     try {
+      // FB 의 doc 메서드는 한 개의 document 를 선택한다.
+      // doc(collection(폴더)참조, 아이디)
+      // updateDoc (문서, {키:, 값:} )
       const docRef = await updateDoc(doc(colRef, id), { completed: flag });
       dispatch({ type: "updateCompleted", payload: docRef });
     } catch (err) {
       console.log(err);
     }
   };
+  // edit 업데이트
+  const updateTitleDocument = async (id, title) => {
+    dispatch({ type: "isPending" });
+    try {
+      const docRef = await updateDoc(doc(colRef, id), { title });
+      dispatch({ type: "updateDoc", payload: docRef });
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
   // 외부 호출
-  return { addDocument, deleteDocument, updateCompletedDocument, response };
+  return {
+    addDocument,
+    deleteDocument,
+    updateCompletedDocument,
+    updateTitleDocument,
+    response,
+  };
 };

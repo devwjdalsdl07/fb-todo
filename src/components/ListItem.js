@@ -3,7 +3,8 @@ import { useFireStore } from "../hooks/useFireStore";
 
 const ListItem = ({ item }) => {
   // console.log("ListItem 랜더링", item);
-  const { deleteDocument, updateCompletedDocument } = useFireStore("todo");
+  const { deleteDocument, updateCompletedDocument, updateTitleDocument } =
+    useFireStore("todo");
 
   // 편집 상태 설정 state
   const [isEdit, setIsEdit] = useState(false);
@@ -40,6 +41,7 @@ const ListItem = ({ item }) => {
     setIsEdit(false);
   };
   const handleSaveClick = _id => {
+    updateTitleDocument(_id, editTitle);
     // let newTodoData = todoData.map(item => {
     //   if (item.id === _id) {
     //     item.title = editTitle;
@@ -55,6 +57,8 @@ const ListItem = ({ item }) => {
   };
 
   const handleCompleteChange = _id => {
+    // FB 의 firstore 에서 id 를 참조 전달
+    // FB 의 firstore 에서 completed 를 반대로 !(Not 연산자)
     updateCompletedDocument(_id, !item.completed);
     // 중요한 것은 음.. id에 해당하는 것만 수정하면 되지 XXX
     // state 는 항상 새롭게 만든 내용 즉, 배열로 업데이트 해야 한다.
