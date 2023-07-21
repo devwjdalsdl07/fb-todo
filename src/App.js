@@ -8,11 +8,12 @@ import SignUp from "./pages/SignUp";
 import Todo from "./pages/Todo";
 import NotFound from "./pages/NotFound";
 import MyPage from "./pages/MyPage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Schedule from "./pages/Schedule";
 import Upload from "./pages/Upload";
 import TodoChart from "./pages/TodoChart";
 import { useAuthContext } from "./hooks/useFirebase";
+import { Modal } from "antd";
 
 function App() {
   // console.log("App 랜더링");
@@ -20,7 +21,34 @@ function App() {
   const [fbName, setFBName] = useState("");
   const [fbEmail, setFBEmail] = useState("");
   const [fbUid, setFBUid] = useState("");
-  const { isAuthReady, user } = useAuthContext();
+  const { isAuthReady, user, errMessage, dispatch } = useAuthContext();
+
+  // 에러 모달
+  const error = msg => {
+    Modal.error({
+      title: "Firebase Warning",
+      content: errMessage,
+      onok: handleOk,
+    });
+  };
+
+  useEffect(() => {
+    if (errMessage !== "") {
+      error(errMessage);
+    }
+  }, [errMessage]);
+
+  const handleOk = () => {
+    dispatch({ type: "isError", payload: "" });
+  };
+  // const [isModalOpen, setIsModalOpen] = useState(true);
+
+  // const handleOk = () => {
+  //   dispatch({ type: "isError", payload: "" });
+  // };
+  // const handleCancel = () => {
+  //   dispatch({ type: "isError", payload: "" });
+  // };
 
   return (
     <>

@@ -35,6 +35,9 @@ const authReducer = (state, action) => {
     case "userDelete":
       return { ...state, user: null };
 
+    case "isError":
+      return { ...state, errMessage: action.payload };
+
     default:
       // 그대로 돌려준다.
       return state;
@@ -51,6 +54,7 @@ const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, {
     user: null, // fb 로그인 정보 {email:"", uid:"",nickName:""}
     isAuthReady: false, // 로그인 상태 체크
+    errMessage: "", // 에러 메시지
   });
   // FB 인증 웹브라우저 새로 고침 처리
   useEffect(() => {

@@ -18,7 +18,11 @@ const SignUp = () => {
 
     try {
       // 로그인을 시도한다.
-      signUp(email, pw, nickName);
+      if (pw === pwConfirm) {
+        signUp(email, pw, nickName);
+      } else {
+        alert("비번 확인해주셈");
+      }
     } catch (error) {
       console.log(error);
     }

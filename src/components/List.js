@@ -1,6 +1,6 @@
 import React from "react";
 import ListItem from "./ListItem";
-const List = ({ todoData, setTodoData }) => {
+const List = ({ todoData }) => {
   // console.log("List 랜더링");
 
   return (
@@ -10,8 +10,8 @@ const List = ({ todoData, setTodoData }) => {
         <ListItem
           key={item.id}
           item={item}
-          todoData={todoData}
-          setTodoData={setTodoData}
+          // todoData={todoData}
+          // setTodoData={setTodoData}
         />
       ))}
     </div>
