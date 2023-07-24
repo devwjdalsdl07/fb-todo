@@ -2,13 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 // import firebase from "../firebase";
 import { useLogout, useAuthContext } from "../hooks/useFirebase";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   // AuthContext 로그아웃 실행으로 상태 변경
   const { logout } = useLogout();
-  const { user } = useAuthContext();
-  console.log("============");
-  console.log(user);
+  const { user } = useSelector(state => state);
+  // console.log("============");
+  // console.log(user);
 
   // const navigator = useNavigate();
   // fb 로그아웃

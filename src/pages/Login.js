@@ -13,7 +13,7 @@ const Login = () => {
   };
 
   const onFinish = values => {
-    console.log("Success:", values);
+    // console.log("Success:", values);
     try {
       login(values.email, values.password);
     } catch (err) {
@@ -51,9 +51,9 @@ const Login = () => {
   const onFinishFailed = errorInfo => {
     // console.log("Failed:", errorInfo);
     const arr = errorInfo.errorFields;
-    console.log(arr);
+    // console.log(arr);
     arr.forEach(item => {
-      console.log(item.errors);
+      // console.log(item.errors);
     });
   };
   // Modal 기능

@@ -23,7 +23,7 @@ const UploadFetch = () => {
     // FormData 객체에 속성명:값을 추가한다.
     // 이경우 append() 메서드를 활용한다.
     formData.append(sendKey, file);
-    console.log(formData);
+    // console.log(formData);
     try {
       const res = await fetch(sendUrl, {
         method: "POST",
@@ -32,13 +32,13 @@ const UploadFetch = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("전송완료 : ", res);
+      // console.log("전송완료 : ", res);
       //   임시로 올려진 이미지를 미리보기하자.
       //   아래 메서드는 blob(Binary Large Object) 을 생성한다.
       //  blob 은 이진수로 데이터를 표현한다.
       setUploadImage(URL.createObjectURL(file));
     } catch (error) {
-      console.log("업로드 실패 :", error);
+      // console.log("업로드 실패 :", error);
     }
   };
   return (
@@ -75,7 +75,7 @@ const UploadPreview = () => {
       //   이미지가 임시파일로 웹브라우저에 로드완료 되면
       reader.onloadend = () => {
         // state 변경한다.
-        console.log(reader.result);
+        // console.log(reader.result);
         setUploadImage(reader.result);
       };
       //   임시파일을 읽어들인다.
@@ -102,7 +102,7 @@ const UploadPreview = () => {
             "Content-Type": "multipart/form-data",
           },
         });
-        console.log("전송완료 : ", res);
+        // console.log("전송완료 : ", res);
         // 서버가 정상적으로 업데이트 되고 나서 URL 줄때
         const serverStatus = res.status + "";
         // const serverStatus = res.status.toString;
@@ -113,7 +113,7 @@ const UploadPreview = () => {
           setCharImg(uploadImage);
         }
       } catch (err) {
-        console.log("데이터 전송 실패", err);
+        // console.log("데이터 전송 실패", err);
       }
     }
   };
@@ -181,7 +181,7 @@ const UploadAxios = () => {
       //   이미지가 임시파일로 웹브라우저에 로드완료 되면
       reader.onloadend = () => {
         // state 변경한다.
-        console.log(reader.result);
+        // console.log(reader.result);
         setUploadImage(reader.result);
       };
       //   임시파일을 읽어들인다.
@@ -206,7 +206,7 @@ const UploadAxios = () => {
             "Content-Type": "multipart/form-data",
           },
         });
-        console.log("전송완료 : ", res);
+        // console.log("전송완료 : ", res);
         // 서버가 정상적으로 업데이트 되고 나서 URL 줄때
         const serverStatus = res.status + "";
         // const serverStatus = res.status.toString;
@@ -217,7 +217,7 @@ const UploadAxios = () => {
           setCharImg(uploadImage);
         }
       } catch (err) {
-        console.log("데이터 전송 실패", err);
+        // console.log("데이터 전송 실패", err);
         // 데모 버전에서 프론트에서 처리
         setCharImg(uploadImage);
       }
@@ -323,7 +323,7 @@ const UploadJson = () => {
     // 웹브라우저가 갱신한다.
     // 기본동작 막기
     e.preventDefault();
-    console.log("submit 실행으로 데이터 처리시작");
+    // console.log("submit 실행으로 데이터 처리시작");
     // 필수 항목을 체크 한다. (기획서상의 문제)
     // : 이미지 파일이 있는지
     if (!previewImage) {
@@ -355,7 +355,7 @@ const UploadJson = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(res);
+      // console.log(res);
     } catch (err) {
       console.log(err);
     }
@@ -425,7 +425,7 @@ const UploadMulti = () => {
   //   : (form 태그에서) submit 은 사용자가 확인 버튼을 누르면 실행된다.
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log("submit 실행으로 데이터 처리시작");
+    // console.log("submit 실행으로 데이터 처리시작");
 
     if (!previewImage) {
       alert("이미지를 선택해 주세요");
@@ -449,7 +449,7 @@ const UploadMulti = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(res);
+      // console.log(res);
     } catch (err) {
       console.log(err);
     }

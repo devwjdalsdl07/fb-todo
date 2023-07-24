@@ -3,24 +3,25 @@ import { useState } from "react";
 import List from "../components/List";
 import Form from "../components/Form";
 import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "../hooks/useFirebase";
+// import { useAuthContext } from "../hooks/useFirebase";
 import { deleteAllTodo } from "../axios/axios";
 // collection import
 import { useCollection } from "../hooks/useCollection";
+import { useSelector } from "react-redux";
 
-const Todo = ({ fbName, fbEmail, fbUid }) => {
+const Todo = () => {
   // 사용자별 등록을 위해 user 를 참조
-  const { user } = useAuthContext();
+  const { user } = useSelector(state => state);
   // collection data 출력 state
   const { documents, error } = useCollection("todo", ["uid", "==", user.uid]);
-  console.log("문서목록 ========");
-  console.log(documents);
+  // console.log("문서목록 ========");
+  // console.log(documents);
 
   const navigator = useNavigate();
 
   // 백엔드반에 DB table 구성에 활용한다.
   // FB, MongoDB 에서는 Collection 구성에 활용한다.
-  console.log(fbName, fbEmail);
+  // console.log(fbName, fbEmail);
   // 로컬 데이터 state 변수
   // const initTodoData = localStorage.getItem("fbTodoData")
   //   ? JSON.parse(localStorage.getItem("fbTodoData"))

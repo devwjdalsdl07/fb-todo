@@ -11,17 +11,20 @@ import {
 } from "firebase/auth";
 import { appAuth } from "../firebase/config";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+// import KakaoLogin from "./../components/KakaoLogin";
 
 // AuthContext Hook
-export const useAuthContext = () => {
-  const context = useContext(AuthContext);
-  return context;
-};
+// export const useAuthContext = () => {
+//   const context = useContext(AuthContext);
+//   return context;
+// };
 // 사용자 로그인 Hook
 export const useLogin = () => {
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
-  const { dispatch } = useAuthContext();
+  // const { dispatch } = useAuthContext();
+  const dispatch = useDispatch();
   const Navigate = useNavigate();
   const login = async (email, password) => {
     setError(null);
@@ -58,7 +61,8 @@ export const useLogin = () => {
 export const useLogout = () => {
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
-  const { dispatch } = useAuthContext();
+  // const { dispatch } = useAuthContext();
+  const dispatch = useDispatch();
   const Navigate = useNavigate;
   const logout = async () => {
     setError(null);
@@ -77,7 +81,8 @@ export const useLogout = () => {
 // 로그인, 로그아웃, 회원가입 처리 상태를 위한 Custom Hook
 export const useSignup = () => {
   // authContext 데이터 전달
-  const { dispatch } = useAuthContext();
+  // const { dispatch } = useAuthContext();
+  const dispatch = useDispatch();
 
   // 사용자 상태에 따라 웹브라우저 라우터 이동
   const navigate = useNavigate();
@@ -105,7 +110,7 @@ export const useSignup = () => {
       const user = userCredential.user;
       if (!user) {
         // 에러 객체를 던진다.
-        console.log("회원 가입에 실패하였습니다.");
+        // console.log("회원 가입에 실패하였습니다.");
         return;
       }
       // 성공시에는 사용자 닉네임을 설정한다.
@@ -113,7 +118,7 @@ export const useSignup = () => {
         displayName: displayName,
         //   photoURL: "https://example.com/jane-q-user/profile.jpg",
       });
-      console.log("dispatch 실행 ========= ");
+      // console.log("dispatch 실행 ========= ");
       dispatch({ type: "login", payload: "user" });
       // 에러 없음
       setError(null);
@@ -141,7 +146,8 @@ export const useSignup = () => {
 };
 // 사용자 email 변경 Hook
 export const useUpdateEmail = () => {
-  const { dispatch } = useAuthContext();
+  // const { dispatch } = useAuthContext();
+  const dispatch = useDispatch();
   const [error, setError] = useState(null);
   const [isPending, setIspending] = useState(false);
 
@@ -163,7 +169,8 @@ export const useUpdateEmail = () => {
 };
 // 사용자 nickName 변경 Hook
 export const useUpdateNickName = () => {
-  const { dispatch } = useAuthContext();
+  // const { dispatch } = useAuthContext();
+  const dispatch = useDispatch();
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
 
@@ -210,7 +217,8 @@ export const useUpdatePassWord = () => {
 // 사용자 회원탈퇴 Hook
 export const useUserDelete = () => {
   const navigate = useNavigate();
-  const { dispatch } = useAuthContext();
+  // const { dispatch } = useAuthContext();
+  const dispatch = useDispatch();
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
 

@@ -14,7 +14,7 @@ const AuthContext = createContext();
 // 원본(state)를 변경한다. (불변성 유지)
 const authReducer = (state, action) => {
   // console.log(action.type, action.payload);
-  console.log("리듀서함수 : ", action);
+  // console.log("리듀서함수 : ", action);
   // action 은 반드시 형태가 {type: "구분자"}
   switch (action.type) {
     case "login":
@@ -38,6 +38,16 @@ const authReducer = (state, action) => {
     case "isError":
       return { ...state, errMessage: action.payload };
 
+    case "kakaoLogin":
+      console.log(action.payload);
+      return { ...state, kakaoProfile: action.payload };
+
+    case "kakaoLogout":
+      return { ...state, kakaoProfile: null };
+
+    case "kakaoOut":
+      return { ...state, kakaoProfile: null };
+
     default:
       // 그대로 돌려준다.
       return state;
@@ -55,11 +65,12 @@ const AuthContextProvider = ({ children }) => {
     user: null, // fb 로그인 정보 {email:"", uid:"",nickName:""}
     isAuthReady: false, // 로그인 상태 체크
     errMessage: "", // 에러 메시지
+    kakaoProfile: null, //kakao 저장 정보
   });
   // FB 인증 웹브라우저 새로 고침 처리
   useEffect(() => {
     onAuthStateChanged(appAuth, user => {
-      console.log("onAuthStateChanged : ", user);
+      // console.log("onAuthStateChanged : ", user);
       dispatch({ type: "isAuthReady", payload: user });
     });
   }, []);

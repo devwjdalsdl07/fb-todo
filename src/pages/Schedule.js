@@ -45,11 +45,11 @@ const Schedule = () => {
     // console.log(event.target);
     const div = event.currentTarget.querySelector("div");
     if (div !== null) {
-      console.log(div.dataset.gogo);
+      // console.log(div.dataset.gogo);
       const 제목 = div.dataset.gogoTitle;
       const 날짜 = div.dataset.gogoDay;
       const 이미지 = div.dataset.gogoImgpath;
-      console.log(`${제목} ${날짜} ${이미지} 있구나`);
+      // console.log(`${제목} ${날짜} ${이미지} 있구나`);
     }
 
     showModal();

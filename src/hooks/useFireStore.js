@@ -70,7 +70,7 @@ export const useFireStore = transaction => {
     dispatch({ type: "isPending" });
     try {
       const docRef = await deleteDoc(doc(colRef, id));
-      console.log("삭제했어용");
+      // console.log("삭제했어용");
       dispatch({ type: "deleteDoc", payload: docRef });
     } catch (err) {
       console.log(err);
