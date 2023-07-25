@@ -17,6 +17,7 @@ import { Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { appAuth } from "./firebase/config";
+import { FB_IS_AUTHREADY, FB_IS_ERROR } from "./modules/fbreducer";
 
 function App() {
   // console.log("App 랜더링");
@@ -34,7 +35,7 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(appAuth, user => {
       // console.log("onAuthStateChanged : ", user);
-      dispatch({ type: "isAuthReady", payload: user });
+      dispatch({ type: FB_IS_AUTHREADY, payload: user });
     });
   }, []);
 
@@ -54,7 +55,7 @@ function App() {
   }, [errMessage]);
 
   const handleOk = () => {
-    dispatch({ type: "isError", payload: "" });
+    dispatch({ type: FB_IS_ERROR, payload: "" });
   };
   // const [isModalOpen, setIsModalOpen] = useState(true);
 

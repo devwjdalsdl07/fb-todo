@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+// import { AuthContext } from "../context/AuthContext";
 import {
   signInWithEmailAndPassword,
   signOut,
@@ -12,6 +12,15 @@ import {
 import { appAuth } from "../firebase/config";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import {
+  FB_LOGIN,
+  FB_LOGOUT,
+  FB_UPDATE_EMAIL,
+  FB_UPDATE_NAME,
+  FB_USER_DELETE,
+  FB_IS_ERROR,
+} from "../modules/fbreducer";
+
 // import KakaoLogin from "./../components/KakaoLogin";
 
 // AuthContext Hook
@@ -36,7 +45,7 @@ export const useLogin = () => {
         password,
       );
       const user = userCredential.user;
-      dispatch({ type: "login", payload: user });
+      dispatch({ type: FB_LOGIN, payload: user });
       Navigate("/");
     } catch (err) {
       console.log(err.message);
@@ -52,7 +61,7 @@ export const useLogin = () => {
       } else {
         errMessage = "로그인이 실패하였습니다.";
       }
-      dispatch({ type: "isError", payload: errMessage });
+      dispatch({ type: FB_IS_ERROR, payload: errMessage });
     }
   };
   return { error, isPending, login };
@@ -69,7 +78,7 @@ export const useLogout = () => {
     setIsPending(true);
     try {
       await signOut(appAuth);
-      dispatch({ type: "logout" });
+      dispatch({ type: FB_LOGOUT });
       Navigate("/");
     } catch (err) {
       console.log(err);
@@ -119,7 +128,7 @@ export const useSignup = () => {
         //   photoURL: "https://example.com/jane-q-user/profile.jpg",
       });
       // console.log("dispatch 실행 ========= ");
-      dispatch({ type: "login", payload: "user" });
+      dispatch({ type: FB_LOGIN, payload: "user" });
       // 에러 없음
       setError(null);
       // 연결 후 작업 완료
@@ -138,7 +147,7 @@ export const useSignup = () => {
       } else if (err.code == "auth/weak-password") {
         errMessage = "The password is too weak.";
       }
-      dispatch({ type: "isError", payload: errMessage });
+      dispatch({ type: FB_IS_ERROR, payload: errMessage });
     }
   };
   // 현재 error, isPending, signUp 을 리턴한다.
@@ -158,7 +167,7 @@ export const useUpdateEmail = () => {
       await updateEmail(appAuth.currentUser, email);
 
       setIspending(false);
-      dispatch({ type: "updateEmail", payload: appAuth.currentUser });
+      dispatch({ type: FB_UPDATE_EMAIL, payload: appAuth.currentUser });
     } catch (err) {
       console.log(err.message);
       setIspending(false);
@@ -185,7 +194,7 @@ export const useUpdateNickName = () => {
       });
       setIsPending(false);
       // context 의 state 변경
-      dispatch({ type: "updateName", payload: appAuth.currentUser });
+      dispatch({ type: FB_UPDATE_NAME, payload: appAuth.currentUser });
     } catch (err) {
       console.log(err.message);
       setIsPending(false);
@@ -228,7 +237,7 @@ export const useUserDelete = () => {
     try {
       await deleteUser(appAuth.currentUser);
 
-      dispatch({ type: "userDelete" });
+      dispatch({ type: FB_USER_DELETE });
       navigate("/");
       setIsPending(false);
     } catch (err) {
@@ -244,7 +253,7 @@ export const useUserDelete = () => {
       } else if (err.code == "auth/weak-password") {
         errMessage = "The password is too weak.";
       }
-      dispatch({ type: "isError", payload: errMessage });
+      dispatch({ type: FB_IS_ERROR, payload: errMessage });
     }
   };
   return { error, isPending, userDelete };
