@@ -8,34 +8,44 @@ import SignUp from "./pages/SignUp";
 import Todo from "./pages/Todo";
 import NotFound from "./pages/NotFound";
 import MyPage from "./pages/MyPage";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Schedule from "./pages/Schedule";
 import Upload from "./pages/Upload";
 import TodoChart from "./pages/TodoChart";
-import { useAuthContext } from "./hooks/useFirebase";
+// import { useAuthContext } from "./hooks/useFirebase";
 import { Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { appAuth } from "./firebase/config";
-import { FB_IS_AUTHREADY, FB_IS_ERROR } from "./modules/fbreducer";
+// import { FB_IS_AUTHREADY, FB_IS_ERROR } from "./modules/fbreducer";
+import { isAuthReadyFB, isErrorFB } from "./reducers/fbAuthSlice";
 
 function App() {
-  // console.log("App 랜더링");
   // 추후에 Redux/Recoil state 로 관리 필요
   // const { isAuthReady, user, errMessage, dispatch } = useAuthContext();
+
   // 1. store 에 저장된 state 를 읽어온다
   // const isAuthReady = useSelector(state => state.isAuthReady);
   // const user = useSelector(state => state.user);
   // const errMessage = useSelector(state => state.errMessage);
   // const kakaoProfile = useSelector(state => state.kakaoProfile);
-  const { isAuthReady, user, errMessage } = useSelector(state => state);
+  // Slice 를 활용하였음
+  const { isAuthReady, errMessage, uid } = useSelector(state => state.fbAuth);
+
   // 2. store 에 저장된 state 를 업데이트(action 생성)
   const dispatch = useDispatch();
   // FB 인증 웹브라우저 새로 고침 처리
   useEffect(() => {
     onAuthStateChanged(appAuth, user => {
-      // console.log("onAuthStateChanged : ", user);
-      dispatch({ type: FB_IS_AUTHREADY, payload: user });
+      console.log("onAuthStateChanged : ", user);
+      // dispatch({ type: FB_IS_AUTHREADY, payload: user });
+      dispatch(
+        isAuthReadyFB({
+          uid: user && user.uid,
+          email: user && user.email,
+          displayName: user && user.displayName,
+        }),
+      );
     });
   }, []);
 
@@ -55,7 +65,8 @@ function App() {
   }, [errMessage]);
 
   const handleOk = () => {
-    dispatch({ type: FB_IS_ERROR, payload: "" });
+    // dispatch({ type: FB_IS_ERROR, payload: "" });
+    dispatch(isErrorFB(""));
   };
   // const [isModalOpen, setIsModalOpen] = useState(true);
 
@@ -79,16 +90,16 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route
                 path="/login"
-                element={user ? <Navigate to="/home" /> : <Login />}
+                element={uid ? <Navigate to="/home" /> : <Login />}
               />
               <Route path="/signup" element={<SignUp />} />
               <Route
                 path="/todo"
-                element={user ? <Todo /> : <Navigate to="/login" />}
+                element={uid ? <Todo /> : <Navigate to="/login" />}
               />
               <Route
                 path="/mypage"
-                element={user ? <MyPage /> : <Navigate to="/login" />}
+                element={uid ? <MyPage /> : <Navigate to="/login" />}
               />
               <Route path="/Schedule" element={<Schedule />}></Route>
               <Route path="/chart" element={<TodoChart />}></Route>

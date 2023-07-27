@@ -11,7 +11,7 @@ import {
 import { useSelector } from "react-redux";
 
 const MyPage = () => {
-  const { user } = useSelector(state => state);
+  const { displayName, email } = useSelector(state => state.fbAuth);
   const { updateNickName } = useUpdateNickName();
   const { updateUserEmail } = useUpdateEmail();
   const { updateUserPassWord } = useUpdatePassWord();
@@ -19,13 +19,13 @@ const MyPage = () => {
 
   const navigate = useNavigate();
   const [nickName, setNickName] = useState("");
-  const [email, setEmail] = useState("");
+  const [userEmail, setUserEmail] = useState("");
   const [pw, setPw] = useState("");
   const [pwConfirm, setPwConfirm] = useState("");
   // AuthContext 에 state 의 user 를 출력
   useEffect(() => {
-    setNickName(user.displayName);
-    setEmail(user.email);
+    setNickName(displayName);
+    setUserEmail(email);
   }, []);
 
   const handlerNickName = async e => {
@@ -44,20 +44,14 @@ const MyPage = () => {
   };
   const handlerEmail = async e => {
     e.preventDefault();
-    updateUserEmail(email);
+    updateUserEmail(userEmail);
     // try {
     //   await user.updateEmail(email);
     //   setFBEmail(email);
     //   setEmail(email);
     //   alert("이메일 정보를 변경하였습니다.");
     // } catch (error) {
-    //   if (error.code == "auth/email-already-in-use") {
-    //     alert("The email address is already in use");
-    //   } else if (error.code == "auth/invalid-email") {
-    //     alert("The email address is not valid.");
-    //   } else {
-    //     alert("이메일을 확인해 주세요.");
-    //   }
+    //
     // }
   };
   const handlerPassword = async e => {
@@ -120,8 +114,8 @@ const MyPage = () => {
             <input
               type="email"
               required
-              value={email}
-              onChange={e => setEmail(e.target.value)}
+              value={userEmail}
+              onChange={e => setUserEmail(e.target.value)}
             />
             <button
               className="border rounded px-3 py-2 shadow"
