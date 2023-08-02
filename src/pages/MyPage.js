@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { MyPageDiv } from "../style/UserCSS";
+import { MyPageDiv } from "../style/UserCss";
 import { useNavigate } from "react-router-dom";
 import {
   useAuthContext,

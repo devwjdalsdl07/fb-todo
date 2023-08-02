@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SingUpDiv from "../style/UserCSS";
+import SingUpDiv from "../style/UserCss";
 import { useNavigate } from "react-router-dom";
 import { useSignup } from "../hooks/useFirebase";
 
