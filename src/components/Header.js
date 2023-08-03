@@ -15,9 +15,10 @@ const Header = () => {
   // const navigator = useNavigate();
   // fb 로그아웃
   const dispatch = useDispatch();
-  const handleLogout = () => {
+  const handleLogout = async () => {
     // logout();
-    dispatch(asyncLogoutFetch());
+    await dispatch(asyncLogoutFetch()).unwrap();
+    // 후속 처리
 
     // firebase.auth().signOut();
     // console.log("로그아웃");

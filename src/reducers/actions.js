@@ -3,9 +3,10 @@ import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { appAuth } from "../firebase/config";
 import fbAuthSlice from "./fbAuthSlice";
 // 로그인 thunk 액션
+// dispatch(asyncLoginFetch({이메일, 비번}))
 export const asyncLoginFetch = createAsyncThunk(
   "fbAuthSlice/asyncLoginFetch",
-  async ({ email, password }) => {
+  async ({ email, password }, { rejectWithValue }) => {
     console.log(email, password);
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -44,7 +45,7 @@ export const asyncLoginFetch = createAsyncThunk(
         errMessage = "로그인이 실패하였습니다.";
       }
       // dispatch(isErrorFB(errMessage));
-      return { errMessage };
+      return rejectWithValue({ errMessage });
     }
   },
 );

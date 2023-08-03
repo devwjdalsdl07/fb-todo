@@ -17,18 +17,15 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  const onFinish = values => {
+  const onFinish = async values => {
     // console.log("Success:", values);
     // login(values.email, values.password);
     // dispatch 를 통해서 액션을 만들어/액션담거나
-    dispatch(
+    await dispatch(
       asyncLoginFetch({ email: values.email, password: values.password }),
-    );
-    try {
-      // login(values.email, values.password);
-    } catch (err) {
-      console.log(err);
-    }
+    ).unwrap();
+    // 후속처리
+    navigate("/");
 
     // Firebase 로그인
     // try {

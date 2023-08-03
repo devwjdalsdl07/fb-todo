@@ -87,7 +87,7 @@ const fbAuthSlice = createSlice({
     builder.addCase(asyncLoginFetch.rejected, (state, action) => {
       console.log("네트워크 에러");
       state.isLoading = false;
-      state.errMessage = "네트워크 연결 오류 입니다.";
+      state.errMessage = action.payload.errMessage;
     });
     // logout 케이스
     builder.addCase(asyncLogoutFetch.fulfilled, (state, action) => {
