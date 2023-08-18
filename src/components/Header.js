@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 // import { useLogout } from "../hooks/useFirebase";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncLogoutFetch } from "../reducers/actions";
+import { sagaLogoutFB } from "../reducers/fbAuthSlice";
 
 const Header = () => {
   // AuthContext 로그아웃 실행으로 상태 변경
@@ -17,8 +18,13 @@ const Header = () => {
   const dispatch = useDispatch();
   const handleLogout = async () => {
     // logout();
-    await dispatch(asyncLogoutFetch()).unwrap();
-    // 후속 처리
+    // try {
+    //   await dispatch(asyncLogoutFetch()).unwrap();
+    //   // 후속 처리
+    // } catch (err) {
+    //   console.log(err);
+    // }
+    dispatch(sagaLogoutFB());
 
     // firebase.auth().signOut();
     // console.log("로그아웃");

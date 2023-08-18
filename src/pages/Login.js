@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Button, Checkbox, Form, Input, Modal } from "antd";
 // import { useLogin } from "../hooks/useFirebase";
 import { useDispatch } from "react-redux";
-import { asyncLoginFetch } from "../reducers/actions";
+// import { asyncLoginFetch } from "../reducers/actions";
+import { sagaLoginFB } from "../reducers/fbAuthSlice";
 // import { useLogin } from "../hooks/useFirebase";
 
 const Login = () => {
@@ -21,11 +22,17 @@ const Login = () => {
     // console.log("Success:", values);
     // login(values.email, values.password);
     // dispatch 를 통해서 액션을 만들어/액션담거나
-    await dispatch(
-      asyncLoginFetch({ email: values.email, password: values.password }),
-    ).unwrap();
-    // 후속처리
-    navigate("/");
+    // try {
+    //   await dispatch(
+    //     asyncLoginFetch({ email: values.email, password: values.password }),
+    //   ).unwrap();
+    //   // 후속처리
+    //   navigate("/");
+    // } catch (err) {
+    //   console.log(err);
+    // }
+
+    dispatch(sagaLoginFB({ email: values.email, password: values.password }));
 
     // Firebase 로그인
     // try {
@@ -40,7 +47,6 @@ const Login = () => {
     //   navigate("/");
     // } catch (error) {
     //   console.log(error.code);
-
     //   if (error.code === "auth/invalid-email") {
     //     setModalMessage("올바른 이메일 형식이 아닙니다.");
     //   } else if (error.code === "auth/wrong-password") {
@@ -55,6 +61,7 @@ const Login = () => {
     //   showModal();
     // }
   };
+
   const onFinishFailed = errorInfo => {
     // console.log("Failed:", errorInfo);
     const arr = errorInfo.errorFields;

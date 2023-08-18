@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import Schedule from "./pages/Schedule";
 import Upload from "./pages/Upload";
 import TodoChart from "./pages/TodoChart";
+import Diary from "./pages/Diary";
 // import { useAuthContext } from "./hooks/useFirebase";
 import { Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
@@ -104,6 +105,7 @@ function App() {
               <Route path="/Schedule" element={<Schedule />}></Route>
               <Route path="/chart" element={<TodoChart />}></Route>
               <Route path="/Upload" element={<Upload />}></Route>
+              <Route path="/diary" element={<Diary />}></Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

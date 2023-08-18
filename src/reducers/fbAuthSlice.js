@@ -32,6 +32,9 @@ const fbAuthSlice = createSlice({
     },
     logoUtFB: state => {
       // state.user = null;
+      state.displayName = null;
+      state.uid = null;
+      state.email = null;
     },
     isAuthReadyFB: (state, action) => {
       // state.user = action.payload;
@@ -58,6 +61,32 @@ const fbAuthSlice = createSlice({
     isErrorFB: (state, action) => {
       state.errMessage = action.payload;
     },
+    // saga 를 이용한 로그인
+    sagaLoginFB: (state, action) => {
+      console.log("saga 를 이용한 로그인 시도", action.payload);
+    },
+    sagaLoginSuccessFB: (state, action) => {
+      console.log("saga 를 이용한 로그인 성공", action.payload);
+      state.displayName = action.payload.displayName;
+      state.uid = action.payload.uid;
+      state.email = action.payload.email;
+    },
+    sagaLoginFailFB: (state, action) => {
+      console.log("saga 를 이용한 로그인 실패", action.payload);
+    },
+    // saga 를 이용한 로그아웃 처리
+    sagaLogoutFB: (state, action) => {
+      console.log("saga 를 이용한 로그아웃 시도", action.payload);
+    },
+    sagaLogoutSuccessFB: (state, action) => {
+      console.log("saga 를 이용한 로그아웃 성공", action.payload);
+      state.displayName = null;
+      state.uid = null;
+      state.email = null;
+    },
+    sagaLogoutFailFB: (state, action) => {
+      console.log("saga 를 이용한 로그아웃 실패", action.payload);
+    },
   },
   // 비동기 업데이트 체크(미들웨어) 코드
   // axios 또는 fetch 를 이용합니다.
@@ -78,10 +107,7 @@ const fbAuthSlice = createSlice({
       state.uid = action.payload.uid ? action.payload.uid : null;
       console.log(state.uid);
       state.email = action.payload.email ? action.payload.email : null;
-      state.errMessage = action.payload.errMessage
-        ? action.payload.errMessage
-        : null;
-
+      state.errMessage = "";
       state.isLoading = false;
     });
     builder.addCase(asyncLoginFetch.rejected, (state, action) => {
@@ -95,6 +121,7 @@ const fbAuthSlice = createSlice({
       state.displayName = action.payload.displayName;
       state.uid = action.payload.uid;
       state.email = action.payload.email;
+
       state.errMessage = action.payload.errMessage;
     });
   },
@@ -110,6 +137,12 @@ export const {
   updateEmailFB,
   deleteUserFB,
   isErrorFB,
+  sagaLoginFB,
+  sagaLoginSuccessFB,
+  sagaLoginFailFB,
+  sagaLogoutFB,
+  sagaLogoutSuccessFB,
+  sagaLogoutFailFB,
 } = fbAuthSlice.actions;
 // 비동기 액션 크리에이터 (dispatch 로 호출)
 // export { asyncLoginFetch };

@@ -4,7 +4,7 @@ import List from "../components/List";
 import Form from "../components/Form";
 import { useNavigate } from "react-router-dom";
 // import { useAuthContext } from "../hooks/useFirebase";
-import { deleteAllTodo } from "../axios/axios";
+import { deleteAllTodo } from "../api/axios";
 // collection import
 import { useCollection } from "../hooks/useCollection";
 import { useSelector } from "react-redux";
